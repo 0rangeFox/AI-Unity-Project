@@ -1,0 +1,4 @@
+[submodule "Modules/ml-agents"]
+	path = Modules/ml-agents
+	url = https://github.com/Unity-Technologies/ml-agents.git
+	branch = release_22

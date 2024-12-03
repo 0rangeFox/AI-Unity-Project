@@ -112,7 +112,7 @@ public class Heap<T> where T : IHeapItem<T>
         items[itemB.HeapIndex] = itemA;
 
         int itemAIndex = itemA.HeapIndex;
-        itemA.HeapIndex = itemA.HeapIndex;
+        itemA.HeapIndex = itemB.HeapIndex;
         itemB.HeapIndex = itemAIndex;
     }
 }

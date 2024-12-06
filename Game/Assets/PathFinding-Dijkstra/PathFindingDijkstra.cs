@@ -18,18 +18,84 @@ public class PathFindingDijkstra : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             FindPath(seeker.position, target.position);
 
             if (path != null && path.Count > 0)
             {
-                UnityEngine.Debug.Log("Path finded.");
+                UnityEngine.Debug.Log("Path found.");
                 StopAllCoroutines();
                 StartCoroutine(MoveSeekerAlongPath());
             }
         }
     }
+     void FindPath(Vector3 startPos, Vector3 endPos)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            Node startNode = grid.NodeFromWorldPoint(startPos);
+            Node endNode = grid.NodeFromWorldPoint(endPos);
+
+            Dictionary<Node, int> distances = new Dictionary<Node, int>();
+            Dictionary<Node, Node> previousNodes = new Dictionary<Node, Node>();
+
+            Heap<Node> free = new Heap<Node>(grid.MaxSize);
+            HashSet<Node> visited = new HashSet<Node>();
+
+            foreach (Node n in grid.GetAllNodes())
+            {
+                distances[n] = int.MaxValue;
+            }
+
+            distances[startNode] = 0;
+            free.Add(startNode);
+
+            int iterationCount = 0;
+
+            while (free.Count > 0)
+            {
+                iterationCount++;
+
+                Node currentNode = free.RemoveFirst();
+
+                if (currentNode == endNode)
+                {
+                    sw.Stop();
+                    UnityEngine.Debug.Log("Path found: " + sw.ElapsedMilliseconds + "ms");
+                    UnityEngine.Debug.Log("Number of cycles: " + iterationCount);
+                    RetracePath(startNode, endNode, previousNodes);
+                    return;
+                }
+
+                visited.Add(currentNode);
+
+                foreach (Node neighbour in grid.GetNeighbours(currentNode))
+                {
+
+                    if (!neighbour.walkable || visited.Contains(neighbour))
+                    {
+                        continue;
+                    }
+
+                    int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
+
+                    if (newDistance < distances[neighbour])
+                    {
+                        distances[neighbour] = newDistance;
+                        previousNodes[neighbour] = currentNode;
+
+                        if (!free.Contains(neighbour))
+                        {
+                            free.Add(neighbour);
+                        }
+                    }
+                }
+            }
+
+            UnityEngine.Debug.Log("Path not found. Number of cycles: " + iterationCount); 
+     }
 
     IEnumerator MoveSeekerAlongPath()
     {
@@ -47,12 +113,12 @@ public class PathFindingDijkstra : MonoBehaviour
             }
         }
 
-        Debug.Log("Seeker arrived to the target!");
+        UnityEngine.Debug.Log("Seeker arrived to the target!");
         path.Clear(); 
     }
 
 
-    void RetracePath(Node startNode, Node endNode)
+    void RetracePath(Node startNode, Node endNode, Dictionary<Node, Node> previousNodes)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -60,7 +126,7 @@ public class PathFindingDijkstra : MonoBehaviour
         while (currentNode != startNode)
         {
             path.Add(currentNode);
-            currentNode = previousNode[currentNode];
+            currentNode = previousNodes[currentNode];
         }
         path.Reverse();
 
@@ -81,70 +147,8 @@ public class PathFindingDijkstra : MonoBehaviour
          return 14 * dstX + 10 * (dstY - dstX);
      }
 
-    void FindPath(Vector3 startPos, Vector3 endPos)
-    {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
-
-        Node startNode = grid.NodeFromWorldPoint(startPos);
-        Node endNode = grid.NodeFromWorldPoint(endPos);
-
-        Dictionary<Node, int> distances = new Dictionary<Node, int>();
-        Dictionary<Node, Node> previousNodes = new Dictionary<Node, Node>();
-
-        Heap<Node> free = new Heap<Node>(grid.MaxSize);
-        HashSet<Node> visited = new HashSet<Node>();
-
-        foreach (Node n in grid.GetAllNodes())
-        {
-            distances[node] = int.MaxValue;
-        }
-
-        distances[startNode] = 0;
-        free.Add(startNode);
-
-        int iterationCount = 0;
-
-        while (free.Count > 0)
-        {
-            iterationCount++;
-
-            Node currentNode = free.RemoveFirst();
-
-            if (currentNode == targetNode)
-            {
-                sw.Stop();
-                Debug.Log("Path found: " + sw.ElapsedMilliseconds + "ms");
-                Debug.Log("Number of cycles: " + iterationCount);
-                RetracePath(startNode, targetNode);
-                return;
-            }
-
-            visited.Add(currentNode);
-
-            foreach (Node neighbour in grid.GetNeighbours(currentNode))
-            {
-
-                if (!neighbour.walkable || visited.Contains(neighbour))
-                {
-                    continue;
-                }
-
-                int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
-
-                if (newDistance < distances[neighbor])
-                {
-                    distances[neighbour] = newDistance;
-                    previousNodes[neighbour] = currentNode;
-
-                    if (!free.Contains(neighbour))
-                    {
-                        free.Add(neighbour);
-                    }
-                }
-            }
-        }
-
-        Debug.Log("Path not found. Number of cycles: " + iterationCount); 
     }
-}
+
+
+
+   

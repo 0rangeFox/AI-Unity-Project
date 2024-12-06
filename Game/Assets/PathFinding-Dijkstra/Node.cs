@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeDijkstra : IHeapItem<Node>
+public class Node : IHeapItem<Node>
 {
     public bool walkable;
     public Vector3 worldPosition;

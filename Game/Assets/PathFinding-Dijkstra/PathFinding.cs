@@ -150,15 +150,20 @@ public class PathFinding : MonoBehaviour
     void FindPath(Vector3 startPos, Vector3 endPos)
     {
         Stopwatch sw = new Stopwatch();
-
         sw.Start();
 
+        List<Node> distances = new List<Node>();
         foreach (Node n in grid)
         {
-            n.gcost=float.MaxValue;
+            if(n.walkable)
+            {
+                distances[n] = float.MaxValue;
+                //n.gcost=float.MaxValue;
+            }
+
         }
 
-        foreach (Node n in grid.)
+        foreach (neighbour in grid.)
         {
 
         }
@@ -186,12 +191,13 @@ public class PathFinding : MonoBehaviour
 
             foreach (Node neighbour in grid.GetNeighbours(currentNode))
             {
+
                 if (!neighbour.walkable || visited.Contains(neighbour))
                 {
                     continue;
                 }
 
-                int costToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                distance = currentNode.gCost + GetDistance(currentNode, neighbour);
                 if (costToNeighbour < neighbour.gCost || !free.Contains(neighbour))
                 {
                     neighbour.gCost = costToNeighbour;

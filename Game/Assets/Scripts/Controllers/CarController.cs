@@ -12,8 +12,12 @@ namespace Controllers {
         public List<WheelAxle> wheelAxleList;
         public CarSettings carSettings;
         public float speed = 0;
+        public LayerMask sensorDetectionLayer;
 
         public Rigidbody Rigidbody { get; private set; }
+
+        [SerializeField]
+        private Transform leftSensor, rightSensor;
 
         public bool IsGrounded => this.wheelAxleList.TrueForAll(w =>
             w.wheelColliderLeft.isGrounded && w.wheelColliderRight.isGrounded ||
@@ -29,7 +33,7 @@ namespace Controllers {
 
         //public void FixedUpdate() => this.Drive(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"), Input.GetKey(KeyCode.Space));
 
-        public void Drive(float vertical, float horizontal, bool isBraking) {
+        public bool Drive(float vertical, float horizontal, bool isBraking, float sensorRange) {
             this.speed = this.Rigidbody.linearVelocity.magnitude;
 
             var motor = this.carSettings.motorTorque * vertical;
@@ -53,6 +57,17 @@ namespace Controllers {
                 this.ApplyWheelVisuals(wheel.wheelColliderLeft, wheel.wheelMeshLeft);
                 this.ApplyWheelVisuals(wheel.wheelColliderRight, wheel.wheelMeshRight);
             }
+
+            return this.CheckSensors(sensorRange);
+        }
+
+        public bool CheckSensors(float range) {
+            var direction = this.leftSensor.position - this.rightSensor.position;
+            var distance = direction.magnitude;
+
+            direction.Normalize();
+
+            return Physics.SphereCastAll(this.leftSensor.position, range, direction, distance, this.sensorDetectionLayer).Length > 0;
         }
 
         #region Private Methods

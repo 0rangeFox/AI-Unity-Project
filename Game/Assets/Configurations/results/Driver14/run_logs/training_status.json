@@ -1,0 +1,30 @@
+{
+    "Driver": {
+        "elo": 1175.0290670554964,
+        "checkpoints": [
+            {
+                "steps": 27385,
+                "file_path": "results/Driver14/Driver/Driver-27385.onnx",
+                "reward": 0.020156733536471922,
+                "creation_time": 1733575089.6067939,
+                "auxillary_file_paths": [
+                    "results/Driver14/Driver/Driver-27385.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 27385,
+            "file_path": "results/Driver14/Driver.onnx",
+            "reward": 0.020156733536471922,
+            "creation_time": 1733575089.6067939,
+            "auxillary_file_paths": [
+                "results/Driver14/Driver/Driver-27385.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.5.1"
+    }
+}

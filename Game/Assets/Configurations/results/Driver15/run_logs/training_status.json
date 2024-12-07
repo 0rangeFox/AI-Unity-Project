@@ -1,0 +1,66 @@
+{
+    "Driver": {
+        "checkpoints": [
+            {
+                "steps": 149946,
+                "file_path": "results/Driver15/Driver/Driver-149946.onnx",
+                "reward": null,
+                "creation_time": 1733575510.142755,
+                "auxillary_file_paths": [
+                    "results/Driver15/Driver/Driver-149946.pt"
+                ]
+            },
+            {
+                "steps": 199999,
+                "file_path": "results/Driver15/Driver/Driver-199999.onnx",
+                "reward": 0.08666188340534323,
+                "creation_time": 1733575586.517736,
+                "auxillary_file_paths": [
+                    "results/Driver15/Driver/Driver-199999.pt"
+                ]
+            },
+            {
+                "steps": 226037,
+                "file_path": "results/Driver15/Driver/Driver-226037.onnx",
+                "reward": 1.0,
+                "creation_time": 1733575686.70452,
+                "auxillary_file_paths": [
+                    "results/Driver15/Driver/Driver-226037.pt"
+                ]
+            },
+            {
+                "steps": 226037,
+                "file_path": "results/Driver15/Driver/Driver-226037.onnx",
+                "reward": null,
+                "creation_time": 1733587802.724205,
+                "auxillary_file_paths": [
+                    "results/Driver15/Driver/Driver-226037.pt"
+                ]
+            },
+            {
+                "steps": 236259,
+                "file_path": "results/Driver15/Driver/Driver-236259.onnx",
+                "reward": null,
+                "creation_time": 1733587965.206947,
+                "auxillary_file_paths": [
+                    "results/Driver15/Driver/Driver-236259.pt"
+                ]
+            }
+        ],
+        "elo": 1162.8234173414503,
+        "final_checkpoint": {
+            "steps": 236259,
+            "file_path": "results/Driver15/Driver.onnx",
+            "reward": null,
+            "creation_time": 1733587965.206947,
+            "auxillary_file_paths": [
+                "results/Driver15/Driver/Driver-236259.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.5.1"
+    }
+}

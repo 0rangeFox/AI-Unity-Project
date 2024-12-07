@@ -14,6 +14,9 @@ public class DriverAgent : Agent {
     [SerializeField]
     private Transform target;
 
+    [SerializeField, Range(0f, 10f)]
+    private float sensorRange = 1.5f;
+
     private void Start() {
         this._car = this.GetComponent<CarController>();
         this._originalPosition = this.transform.localPosition;
@@ -31,24 +34,29 @@ public class DriverAgent : Agent {
 
     public override void CollectObservations(VectorSensor sensor) {
         sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(this._car.Rigidbody.linearVelocity.x);
+        sensor.AddObservation(this._car.Rigidbody.linearVelocity.z);
         sensor.AddObservation(this._car.speed);
+        sensor.AddObservation(this._car.CheckSensors(this.sensorRange));
     }
 
     public override void OnActionReceived(ActionBuffers actions) {
-        this._car.Drive(actions.ContinuousActions[0], 0, actions.ContinuousActions[1] > 0);
+        var isSensor = this._car.Drive(actions.ContinuousActions[0], actions.ContinuousActions[1], actions.ContinuousActions[2] > 0, this.sensorRange);
 
         var currentDistanceToTarget = Vector3.Distance(this.transform.localPosition, this.target.localPosition);
         var distanceChange = _previousDistanceToTarget - currentDistanceToTarget;
 
-        if (distanceChange > 0)
-            SetReward(0.1f * distanceChange);
+        if (isSensor)
+            SetReward(-1f);
+        else if (distanceChange > 0)
+            SetReward(.1f * distanceChange);
         else if (distanceChange < 0)
-            SetReward(-0.1f * -distanceChange);
+            SetReward(-.1f * -distanceChange);
 
-        if ((this._previousDistanceToTarget = currentDistanceToTarget) < 1f) {
-            this.SetReward(1.0f);
+        if (!isSensor && (this._previousDistanceToTarget = currentDistanceToTarget) < 1f) {
+            this.SetReward(1f);
             this.EndEpisode();
-        } else if (!this._car.IsGrounded)
+        } else if (isSensor || !this._car.IsGrounded)
             this.EndEpisode();
     }
 

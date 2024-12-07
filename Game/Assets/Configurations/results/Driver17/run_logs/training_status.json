@@ -1,0 +1,66 @@
+{
+    "Driver": {
+        "checkpoints": [
+            {
+                "steps": 99974,
+                "file_path": "results/Driver17/Driver/Driver-99974.onnx",
+                "reward": -0.520119730962088,
+                "creation_time": 1733588473.518949,
+                "auxillary_file_paths": [
+                    "results/Driver17/Driver/Driver-99974.pt"
+                ]
+            },
+            {
+                "steps": 149989,
+                "file_path": "results/Driver17/Driver/Driver-149989.onnx",
+                "reward": -0.5532264518198755,
+                "creation_time": 1733588714.728551,
+                "auxillary_file_paths": [
+                    "results/Driver17/Driver/Driver-149989.pt"
+                ]
+            },
+            {
+                "steps": 190230,
+                "file_path": "results/Driver17/Driver/Driver-190230.onnx",
+                "reward": -0.9158528447151184,
+                "creation_time": 1733588990.081504,
+                "auxillary_file_paths": [
+                    "results/Driver17/Driver/Driver-190230.pt"
+                ]
+            },
+            {
+                "steps": 199999,
+                "file_path": "results/Driver17/Driver/Driver-199999.onnx",
+                "reward": -0.5015297482984707,
+                "creation_time": 1733590685.6220732,
+                "auxillary_file_paths": [
+                    "results/Driver17/Driver/Driver-199999.pt"
+                ]
+            },
+            {
+                "steps": 240363,
+                "file_path": "results/Driver17/Driver/Driver-240363.onnx",
+                "reward": 0.11418635300968004,
+                "creation_time": 1733590797.656229,
+                "auxillary_file_paths": [
+                    "results/Driver17/Driver/Driver-240363.pt"
+                ]
+            }
+        ],
+        "elo": 301.78160884587317,
+        "final_checkpoint": {
+            "steps": 240363,
+            "file_path": "results/Driver17/Driver.onnx",
+            "reward": 0.11418635300968004,
+            "creation_time": 1733590797.656229,
+            "auxillary_file_paths": [
+                "results/Driver17/Driver/Driver-240363.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.5.1"
+    }
+}

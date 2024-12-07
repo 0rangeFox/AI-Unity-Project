@@ -44,10 +44,10 @@ public class PathFindingDijkstra : MonoBehaviour
             Heap<Node> free = new Heap<Node>(grid.MaxSize);
             HashSet<Node> visited = new HashSet<Node>();
 
-            foreach (Node n in grid.GetAllNodes())
+           /* foreach (Node n in grid.GetAllNodes())
             {
                 distances[n] = int.MaxValue;
-            }
+            }*/
 
             distances[startNode] = 0;
             free.Add(startNode);
@@ -81,7 +81,13 @@ public class PathFindingDijkstra : MonoBehaviour
                         continue;
                     }
 
-                    int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
+                if (!distances.ContainsKey(neighbour))
+                {
+                    distances[neighbour] = int.MaxValue; // Initialize distance only when needed
+                }
+
+
+                int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
 
                     //UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
 
@@ -164,13 +170,14 @@ public class PathFindingDijkstra : MonoBehaviour
 
          if (dstX > dstY)
          {
-             return 14 * dstY + 10 * (dstX - dstY);
+            //UnityEngine.Debug.Log($"Return 1 -> Diag: 14*{dstY}, Stra: 10*({dstX} - {dstY})");
+            return 14 * dstY + 10 * (dstX - dstY);
          }
+        //UnityEngine.Debug.Log($"Return 2 -> Diag: 14*{dstY}, Stra: 10*({dstY} - {dstX})");
+        return 14 * dstX + 10 * (dstY - dstX);
+   }
 
-         return 14 * dstX + 10 * (dstY - dstX);
-     }
-
-    }
+}
 
 
 

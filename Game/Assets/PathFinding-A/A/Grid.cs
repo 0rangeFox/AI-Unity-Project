@@ -66,7 +66,7 @@ public class Grid : MonoBehaviour
         return neighbours;
     }
 
-    public List<Node> GetAllNodes()
+   /* public List<Node> GetAllNodes()
     {
         List<Node> allnodes = new List<Node>();
 
@@ -83,7 +83,7 @@ public class Grid : MonoBehaviour
         }
 
         return allnodes;
-    }
+    }*/
 
     public Node NodeFromWorldPoint(Vector3 worldPosition)
     {

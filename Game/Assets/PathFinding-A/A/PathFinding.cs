@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
 using System.Diagnostics;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class PathFinding : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class PathFinding : MonoBehaviour
 
         free.Add(startNode);
 
-        int iterationCount = 0; 
+        int iterationCount = 0;
 
         while (free.Count > 0)
         {
@@ -65,8 +65,7 @@ public class PathFinding : MonoBehaviour
             if (currentNode == targetNode)
             {
                 sw.Stop();
-                print("Path found: " + sw.ElapsedMilliseconds + "ms");
-                print("Number of cycles: " + iterationCount);
+                Debug.Log($"[A*] Total time: {sw.ElapsedMilliseconds}ms | Total Cycles: {iterationCount}");
                 RetracePath(startNode, targetNode);
                 return;
             }
@@ -93,7 +92,7 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-        print("Path not found. Number of cycles: " + iterationCount); // Log caso o caminho não seja encontrado
+        print("Path not found. Number of cycles: " + iterationCount); // Log caso o caminho nï¿½o seja encontrado
     }
 
 
@@ -113,8 +112,8 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-        UnityEngine.Debug.Log("Seeker arrived to the target!");
-        path.Clear(); 
+        Debug.Log("Seeker arrived to the target!");
+        path.Clear();
     }
 
 

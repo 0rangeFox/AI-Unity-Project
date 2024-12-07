@@ -1,5 +1,19 @@
 # Inteligência Artificial Aplicada a Jogos *(IAAJ)*
 
+# Técnica #1 - Pathfinding Dijkstra
+
+# Técnica #2 - Pathfinding A*
+
+# Resultados de Pathfinding: Dijkstra & A*
+Ao verificar os resultados, constatamos que o algoritmo A* é mais rápido, mas menos estável, enquanto o algoritmo de Dijkstra é estável, mas demorado.
+
+| Pathfinding | Média de Tempo | Média de Ciclos |
+|:-----------:|:--------------:|:---------------:|
+|  Dijkstra   |    ~2874ms     |     ~865726     |
+|     A*      |     ~281ms     |     ~96317      |
+
+![](./Images/Pathfinding_Benchmark.png)
+
 # Técnica #3 - Aprendizagem por Reforço
 Para efetuar esta técnica, foi utilizado o [ML Agents](https://github.com/Unity-Technologies/ml-agents), que consiste num agente que irá aprender a conduzir um veículo e, ao longo dos episódios, irá aumentar o grau de complexidade, introduzindo mais parâmetros e obstáculos.
 

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
 using System.Diagnostics;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class PathFindingDijkstra : MonoBehaviour
 {
@@ -65,8 +65,7 @@ public class PathFindingDijkstra : MonoBehaviour
             if (currentNode == endNode)
                 {
                     sw.Stop();
-                    print("Path found: " + sw.ElapsedMilliseconds + "ms");
-                    print("Number of cycles: " + iterationCount);
+                    Debug.Log($"[Dijkstra] Total time: {sw.ElapsedMilliseconds}ms | Total Cycles: {iterationCount}");
                     RetracePath(startNode, endNode, previousNodes);
                     return;
                 }
@@ -106,7 +105,7 @@ public class PathFindingDijkstra : MonoBehaviour
                 }
             }
 
-            UnityEngine.Debug.Log("Path not found. Number of cycles: " + iterationCount); 
+            UnityEngine.Debug.Log("Path not found. Number of cycles: " + iterationCount);
      }
 
     IEnumerator MoveSeekerAlongPath()
@@ -126,7 +125,7 @@ public class PathFindingDijkstra : MonoBehaviour
         }
 
         UnityEngine.Debug.Log("Seeker arrived to the target!");
-        path.Clear(); 
+        path.Clear();
     }
     IEnumerator FindPathCoroutine()
     {
@@ -135,11 +134,11 @@ public class PathFindingDijkstra : MonoBehaviour
 
         while (iterations < maxIterations)
         {
-            
+
             iterations++;
             if (iterations % 50 == 0)
             {
-                yield return null; 
+                yield return null;
             }
         }
     }
@@ -181,4 +180,4 @@ public class PathFindingDijkstra : MonoBehaviour
 
 
 
-   
+

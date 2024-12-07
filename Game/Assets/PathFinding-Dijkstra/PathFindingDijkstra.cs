@@ -60,7 +60,9 @@ public class PathFindingDijkstra : MonoBehaviour
 
                 Node currentNode = free.RemoveFirst();
 
-                if (currentNode == endNode)
+                UnityEngine.Debug.Log($"Processing Node: {currentNode.gridX}, {currentNode.gridY}");
+
+            if (currentNode == endNode)
                 {
                     sw.Stop();
                     UnityEngine.Debug.Log("Path found: " + sw.ElapsedMilliseconds + "ms");
@@ -81,10 +83,14 @@ public class PathFindingDijkstra : MonoBehaviour
 
                     int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
 
+                    UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
+
                     if (newDistance < distances[neighbour])
                     {
                         distances[neighbour] = newDistance;
                         previousNodes[neighbour] = currentNode;
+
+                        UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
 
                         if (!free.Contains(neighbour))
                         {
@@ -126,6 +132,7 @@ public class PathFindingDijkstra : MonoBehaviour
         while (currentNode != startNode)
         {
             path.Add(currentNode);
+            UnityEngine.Debug.Log("Node in path: " + currentNode);
             currentNode = previousNodes[currentNode];
         }
         path.Reverse();

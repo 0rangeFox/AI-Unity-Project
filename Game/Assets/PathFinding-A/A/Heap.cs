@@ -23,6 +23,11 @@ public class Heap<T> where T : IHeapItem<T>
 
     public T RemoveFirst()
     {
+        if (currentItemCount == 0)
+        {
+            throw new InvalidOperationException("Heap is empty");
+        }
+
         T firstItem = items[0];
         currentItemCount--;
         items[0] = items[currentItemCount];

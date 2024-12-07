@@ -65,8 +65,8 @@ public class PathFindingDijkstra : MonoBehaviour
             if (currentNode == endNode)
                 {
                     sw.Stop();
-                    UnityEngine.Debug.Log("Path found: " + sw.ElapsedMilliseconds + "ms");
-                    UnityEngine.Debug.Log("Number of cycles: " + iterationCount);
+                    print("Path found: " + sw.ElapsedMilliseconds + "ms");
+                    print("Number of cycles: " + iterationCount);
                     RetracePath(startNode, endNode, previousNodes);
                     return;
                 }
@@ -90,7 +90,7 @@ public class PathFindingDijkstra : MonoBehaviour
                         distances[neighbour] = newDistance;
                         previousNodes[neighbour] = currentNode;
 
-                        UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
+                    UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
 
                         if (!free.Contains(neighbour))
                         {

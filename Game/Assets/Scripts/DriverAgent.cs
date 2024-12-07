@@ -31,30 +31,24 @@ public class DriverAgent : Agent {
 
     public override void CollectObservations(VectorSensor sensor) {
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(this._car.Rigidbody.linearVelocity.x);
-        sensor.AddObservation(this._car.Rigidbody.linearVelocity.z);
         sensor.AddObservation(this._car.speed);
     }
 
     public override void OnActionReceived(ActionBuffers actions) {
-        this._car.Drive(actions.ContinuousActions[0], actions.ContinuousActions[1], actions.ContinuousActions[2] > 0);
-        var currentDistanceToTarget = Vector3.Distance(this.transform.localPosition, this.target.localPosition);
+        this._car.Drive(actions.ContinuousActions[0], 0, actions.ContinuousActions[1] > 0);
 
-        // Reward based on distance to target
+        var currentDistanceToTarget = Vector3.Distance(this.transform.localPosition, this.target.localPosition);
         var distanceChange = _previousDistanceToTarget - currentDistanceToTarget;
 
-        // If we're getting closer, give a reward proportional to how much closer
-        if (distanceChange > 0) {
-            SetReward(0.1f * distanceChange); // You can adjust the factor 0.1f for scaling
-        } else if (distanceChange < 0) {
-            SetReward(-0.1f * -distanceChange); // Penalize for moving away from the target
-        }
+        if (distanceChange > 0)
+            SetReward(0.1f * distanceChange);
+        else if (distanceChange < 0)
+            SetReward(-0.1f * -distanceChange);
 
-        // Reached target
-        if ((this._previousDistanceToTarget = currentDistanceToTarget) < 1.42f) {
+        if ((this._previousDistanceToTarget = currentDistanceToTarget) < 1f) {
             this.SetReward(1.0f);
             this.EndEpisode();
-        } else if (!this._car.IsGrounded) // Fell off platform
+        } else if (!this._car.IsGrounded)
             this.EndEpisode();
     }
 

@@ -60,7 +60,7 @@ public class PathFindingDijkstra : MonoBehaviour
 
                 Node currentNode = free.RemoveFirst();
 
-                UnityEngine.Debug.Log($"Processing Node: {currentNode.gridX}, {currentNode.gridY}");
+                //UnityEngine.Debug.Log($"Processing Node: {currentNode.gridX}, {currentNode.gridY}");
 
             if (currentNode == endNode)
                 {
@@ -83,14 +83,14 @@ public class PathFindingDijkstra : MonoBehaviour
 
                     int newDistance = distances[currentNode] + GetDistance(currentNode, neighbour);
 
-                    UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
+                    //UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
 
                     if (newDistance < distances[neighbour])
                     {
                         distances[neighbour] = newDistance;
                         previousNodes[neighbour] = currentNode;
 
-                    UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
+                        //UnityEngine.Debug.Log($"Updated neighbour: {neighbour.gridX}, {neighbour.gridY} - Distance: {newDistance}");
 
                         if (!free.Contains(neighbour))
                         {
@@ -122,7 +122,21 @@ public class PathFindingDijkstra : MonoBehaviour
         UnityEngine.Debug.Log("Seeker arrived to the target!");
         path.Clear(); 
     }
+    IEnumerator FindPathCoroutine()
+    {
+        int maxIterations = 1000;
+        int iterations = 0;
 
+        while (iterations < maxIterations)
+        {
+            
+            iterations++;
+            if (iterations % 50 == 0)
+            {
+                yield return null; 
+            }
+        }
+    }
 
     void RetracePath(Node startNode, Node endNode, Dictionary<Node, Node> previousNodes)
     {
@@ -132,13 +146,15 @@ public class PathFindingDijkstra : MonoBehaviour
         while (currentNode != startNode)
         {
             path.Add(currentNode);
-            UnityEngine.Debug.Log("Node in path: " + currentNode);
+            //UnityEngine.Debug.Log("Node in path: " + currentNode);
             currentNode = previousNodes[currentNode];
         }
+
         path.Reverse();
 
         grid.path = path;
         this.path = path;
+
     }
 
    int GetDistance(Node nodeA, Node nodeB)

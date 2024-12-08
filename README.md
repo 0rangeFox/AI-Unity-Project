@@ -49,8 +49,8 @@ Ao verificar os resultados, constatamos que o algoritmo A* é mais rápido, mas 
 
 | Pathfinding | Média de Tempo | Média de Ciclos |
 |:-----------:|:--------------:|:---------------:|
-|  Dijkstra   |    ~2874ms     |     ~865726     |
-|     A*      |     ~281ms     |     ~96317      |
+|  Dijkstra   |    ~3159ms     |     ~626759     |
+|     A*      |     ~2387ms     |     ~585547      |
 
 ![](./Images/Pathfinding_Benchmark.png)
 

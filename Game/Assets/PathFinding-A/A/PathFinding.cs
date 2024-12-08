@@ -92,7 +92,7 @@ public class PathFinding : MonoBehaviour
             }
         }
 
-        print("Path not found. Number of cycles: " + iterationCount); // Log caso o caminho n�o seja encontrado
+        print("Path not found. Number of cycles: " + iterationCount); 
     }
 
 

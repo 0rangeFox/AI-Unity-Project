@@ -4,6 +4,46 @@
 
 # Técnica #2 - Pathfinding A*
 
+O algoritmo A* é utilizado em inteligência artificial para jogos devido à sua eficiência em encontrar caminhos. Ele combina:
+
+    Custo de Movimento (gCost): A distância acumulada desde o nó inicial até o nó atual.
+    Custo Heurístico (hCost): A estimativa da distância restante do nó atual até o nó final (normalmente calculada usando a distância Manhattan ou Euclidiana).
+    Custo Total (fCost): A soma dos dois valores anteriores (fCost=gCost+hCostfCost=gCost+hCost).
+
+O A* funciona explorando os nós mais promissores (menor fCost) primeiro, até alcançar o destino.
+
+- Grid e Nós
+
+A área de jogo é representada como um grid composto por nós. Cada nó possui as seguintes propriedades:
+
+    walkable: Define se o nó é navegável ou está bloqueado por um obstáculo.
+    worldPosition: A posição do nó no mundo 3D.
+    gCost, hCost, fCost: Custos usados pelo algoritmo A*.
+    parent: Referência ao nó anterior no caminho, usada para reconstruir o caminho final.
+
+- Heap Binária
+
+Para otimizar a busca do nó com o menor custo na lista de nós a explorar, utilizamos uma Heap Binária:
+
+    Permite operações de busca e remoção do menor elemento em O(log n).
+    A heap mantém a ordem baseada no fCost, priorizando os nós com menor custo.
+
+Fluxo do Algoritmo
+
+    Inicialização
+        O algoritmo começa por adicionar o nó inicial à heap.
+        A heap é usada como lista de nós "abertos" (não visitados).
+
+    Exploração
+        Retira-se o nó com o menor fCost da heap.
+        Se este nó for o nó-alvo, o caminho é encontrado.
+        Caso contrário, os vizinhos do nó atual são avaliados:
+            Se um vizinho não for "walkable" ou já estiver explorado, é ignorado.
+            Caso contrário, calcula-se o custo acumulado até o vizinho (gCost) e, se necessário, atualiza-se o nó na heap.
+
+    Reconstrução do Caminho
+        Quando o nó-alvo é alcançado, o caminho é reconstruído seguindo os parent de cada nó desde o destino até à origem.
+
 # Resultados de Pathfinding: Dijkstra & A*
 Ao verificar os resultados, constatamos que o algoritmo A* é mais rápido, mas menos estável, enquanto o algoritmo de Dijkstra é estável, mas demorado.
 

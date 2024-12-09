@@ -4,7 +4,7 @@
 
 O algoritmo Dijkstra é usado para encontrar o caminho mais curto de um ponto inicial para todos os outros pontos (ou como neste caso para um destino específico) em um grafo com pesos não negativos.
 
-O Dijkstra, diferente do A*, só faz uso do Custo de Movimento (gCost) e não tem a necessidade de usar Custo Heurístico (hCost) (e por consequência também não faz uso do Custo Total (fCost)).
+O Dijkstra, diferente do A*, só faria uso do Custo de Movimento(gCost, mas neste caso é utilizado um dicionário com função similar) e não tem a necessidade de usar Custo Heurístico (hCost) (e por consequência também não faz uso do Custo Total (fCost)).
 
 - Grid e Nós
 
@@ -12,7 +12,7 @@ A área de jogo é a mesma que a do algoritmo A*. E cada nó tem como propriedad
 	
     walkable: Define se o nó é navegável ou está bloqueado por um obstáculo.
     worldPosition: A posição do nó no mundo 3D.
-    gCost, hCost, fCost: Dos 3 custos o algoritmo Dijkstra, apenas faz uso do gCost.
+    gCost, hCost, fCost: O algoritmo Dijkstra não faz uso de nenhum dos custos. Em vez disso utiliza um dicionário próprio(distances) para armazenar o custo acumulado (similar a gCost).
     parent: Referência ao nó anterior no caminho, mas o algoritmo Dijkstra usa o dicionário previousNodes alternativamente.
 
 - Heap Binária
@@ -24,21 +24,21 @@ A área de jogo é a mesma que a do algoritmo A*. E cada nó tem como propriedad
 	Inicialização
 
 	   São criados 2 dicionários:
-		Dicionário distances: Armazena a menor distância conhecida do nó inicial a cada nó no grafo. Neste o nó inicial recebe distância 0 e os 				restantes nós recebem distância infinita(neste caso o valor máximo de int).
+		Dicionário distances: Armazena a menor distância conhecida do nó inicial a cada nó no grafo. Neste o nó inicial recebe distância 0 e os restantes nós recebem distância infinita(neste caso o valor máximo de int).
 		Dicionário previousNodes: Armazenar o nó anterior no caminho mais curto para cada nó (usado para reconstruir o caminho no final).
-	   São criadas as estruturas Heap(contém o nó inicial com distância 0) e HashSet que são utilizadas para armazenar nós não visitados e nós 	visitados respetivamente.	
+	   São criadas as estruturas Heap(contém o nó inicial com distância 0) e HashSet que são utilizadas para armazenar nós não visitados e nós visitados respetivamente.	
 
 
         Exploração
 	   
 	   O nó com a menor distância atual da Heap é retirado e este passa a ser o currentNode e é então processado.
 		Se um vizinho não for "walkable" ou já estiver explorado, este é ignorado.
-		Senão avalia-se se newDistance é menor que a distância atual do vizinho, a distância no dicionário distances é atualizado com a nova 		      distância, o currentNode é adicionado ao dicionário previousNodes e o vizinho é adicionado á Heap se já não lá tiver.
+		Senão avalia-se se newDistance é menor que a distância atual do vizinho, a distância no dicionário distances é atualizado com a nova distância, o currentNode é adicionado ao dicionário previousNodes e o vizinho é adicionado á Heap se já não lá tiver.
 		Quando todos os vizinhos do currentNode tiverem sido processados, este é adicionado ao conjunto de nós visitados.
 	   Se o currentNode for o nó final, o algoritmo para e reconstrói o caminho usando o previousNodes.
 
         Reconstrução do Caminho
-	   Ao encontrar o nó final caminho mais curto é reconstruído começando do nó final seguindo os "nós anteriores" no dicionário previousNodes até o 	nó inicial.
+	   Ao encontrar o nó final caminho mais curto é reconstruído começando do nó final seguindo os "nós anteriores" no dicionário previousNodes até o nó inicial.
 
 # Técnica #2 - Pathfinding A*
 

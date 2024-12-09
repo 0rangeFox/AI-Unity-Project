@@ -42,45 +42,60 @@ A área de jogo é a mesma que a do algoritmo A*. E cada nó tem como propriedad
 
 # Técnica #2 - Pathfinding A*
 
-O algoritmo A* é utilizado em inteligência artificial para jogos devido à sua eficiência em encontrar caminhos. Ele combina:
+Objetivo:
+Implementar o algoritmo A* para encontrar o caminho mais curto entre dois pontos num grid, otimizando-o com o uso de um heap. Este documento explica, passo a passo, como o algoritmo foi implementado e utilizado.
 
-    Custo de Movimento (gCost): A distância acumulada desde o nó inicial até o nó atual.
-    Custo Heurístico (hCost): A estimativa da distância restante do nó atual até o nó final (normalmente calculada usando a distância Manhattan ou Euclidiana).
-    Custo Total (fCost): A soma dos dois valores anteriores (fCost=gCost+hCostfCost=gCost+hCost).
+Passo 1: Configurar o Grid
 
-O A* funciona explorando os nós mais promissores (menor fCost) primeiro, até alcançar o destino.
+O que foi feito:
 
-- Grid e Nós
+    Foi criada a classe Node para representar cada célula do grid.
+    Cada Node tem:
+        Posição no mundo: Coordenadas no Unity.
+        Propriedade walkable: Indica se o nó é navegável.
+        Custos do A*: gCost, hCost e fCost.
 
-A área de jogo é representada como um grid composto por nós. Cada nó possui as seguintes propriedades:
+![](./Images/Grid.png)
 
-    walkable: Define se o nó é navegável ou está bloqueado por um obstáculo.
-    worldPosition: A posição do nó no mundo 3D.
-    gCost, hCost, fCost: Custos usados pelo algoritmo A*.
-    parent: Referência ao nó anterior no caminho, usada para reconstruir o caminho final.
+Nesta imagem podemos observar os nodes walkables (em branco) e os unwalkable (em vermelho).
 
-- Heap Binária
+Passo 2: Implementar o Algoritmo A*
 
-Para otimizar a busca do nó com o menor custo na lista de nós a explorar, utilizamos uma Heap Binária:
+O que foi feito:
 
-    Permite operações de busca e remoção do menor elemento em O(log n).
-    A heap mantém a ordem baseada no fCost, priorizando os nós com menor custo.
+    Criei duas listas para armazenar os nós:
+        Lista aberta (free): Nós a explorar.
+        Conjunto fechado (visited): Nós já explorados.
+    De seguida adicionei a lógica para:
+        Escolher o nó com menor fCost na lista aberta.
+        Explorar os vizinhos navegáveis.
+        Retroceder pelos nós pais para construir o caminho.
 
 Fluxo do Algoritmo
 
-    Inicialização
-        O algoritmo começa por adicionar o nó inicial à heap.
-        A heap é usada como lista de nós "abertos" (não visitados).
+![](./Images/Astardiagram.png)
 
-    Exploração
-        Retira-se o nó com o menor fCost da heap.
-        Se este nó for o nó-alvo, o caminho é encontrado.
-        Caso contrário, os vizinhos do nó atual são avaliados:
-            Se um vizinho não for "walkable" ou já estiver explorado, é ignorado.
-            Caso contrário, calcula-se o custo acumulado até o vizinho (gCost) e, se necessário, atualiza-se o nó na heap.
+Inicializa no startNode.
+Verifica os vizinhos do nó atual.
+Escolhe o vizinho com o menor fCost.
+Verifica se o vizinho escolhido é o targetNode.
+Caso não seja, volta a repetir o ciclo até encontrar o targetNode.
 
-    Reconstrução do Caminho
-        Quando o nó-alvo é alcançado, o caminho é reconstruído seguindo os parent de cada nó desde o destino até à origem.
+Passo 3: Otimização do A* com Heap
+
+O que foi feito:
+
+    Implementei a classe Heap para gerir os nós na lista aberta.
+    O heap reduz a complexidade da operação de obtenção do menor nó de O(n) para O(logn).
+
+Passo 4: Traçar o Caminho
+
+O que foi feito:
+
+    Depois de encontrar o nó final, retrocede pelos nós pais para construir o caminho.
+    Guarda este caminho numa lista path.
+
+![](./Images/PathFinded.png)
 
 # Resultados de Pathfinding: Dijkstra & A*
 Ao verificar os resultados, constatamos que o algoritmo A* é mais rápido, mas menos estável, enquanto o algoritmo de Dijkstra é estável, mas demorado.

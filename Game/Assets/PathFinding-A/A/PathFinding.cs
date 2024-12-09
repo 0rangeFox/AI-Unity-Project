@@ -51,15 +51,7 @@ public class PathFinding : MonoBehaviour
             iterationCount++;
 
             Node currentNode = free.RemoveFirst();
-            //for (int i = 1; i < free.Count; i++)
-            //{
-            //    if (free[i].fCost < currentNode.fCost || free[i].fCost == currentNode.fCost && free[i].hCost < currentNode.hCost)
-            //    {
-            //        currentNode = free[i];
-            //    }
-            //}
-
-            //free.Remove(currentNode);
+            
             visited.Add(currentNode);
 
             if (currentNode == targetNode)
